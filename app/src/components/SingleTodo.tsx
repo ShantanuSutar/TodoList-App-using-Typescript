@@ -9,12 +9,20 @@ interface Props {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
+  const handleDone = (id: number) => {
+    const updatedTodos = todos.map((todo) => {
+      return todo.id === id ? { ...todo, isDone: !todo.isDone } : todo;
+    });
+    setTodos(updatedTodos);
+  };
+
   return (
     <form className="list-none flex gap-8 min-w-[30%]   rounded-md py-5 mt-4 shadow-2xl text-2xl text-center max-w-full items-center  justify-between px-8 text-gray-800 flex-wrap hover:scale-105 cursor-pointer transition-all bg-gray-100">
       <span
         className={` mx-auto max-w-full w-[content] text-wrap h-auto ${
           todo.isDone ? "line-through" : ""
         } `}
+        onClick={() => handleDone(todo.id)}
       >
         {todo.todo}
       </span>
@@ -25,7 +33,10 @@ const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
         <span className=" hover:-translate-y-1 hover:cursor-pointer transition-all">
           <AiFillDelete className=" hover:opacity-80" />
         </span>
-        <span className=" hover:-translate-y-1 hover:cursor-pointer transition-all">
+        <span
+          className=" hover:-translate-y-1 hover:cursor-pointer transition-all"
+          onClick={() => handleDone(todo.id)}
+        >
           <MdDone className=" hover:opacity-80" />
         </span>
       </div>
