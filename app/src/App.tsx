@@ -7,6 +7,22 @@ const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
 
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      setTodos([
+        ...todos,
+        {
+          id: Date.now(),
+          todo,
+          isDone: false,
+        },
+      ]);
+      setTodo("");
+    }
+  };
+  console.log(todos);
+
   return (
     <div className=" w-screen min-h-screen flex flex-col items-center bg-gray-200 pb-8">
       {/* Header goes here */}
@@ -15,7 +31,7 @@ const App: React.FC = () => {
       </h1>
 
       {/* Inputs go here */}
-      <InputField />
+      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
 
       {/* Todos go here */}
     </div>
