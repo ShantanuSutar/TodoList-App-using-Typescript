@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Todo } from "./model";
 import InputField from "./components/InputField";
@@ -6,7 +6,15 @@ import TodoList from "./components/TodoList";
 
 const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const storedTasks: string | null = localStorage.getItem("tasks");
+
+  let storedTasksArray: Todo[] = [];
+  if (storedTasks) {
+    storedTasksArray = JSON.parse(storedTasks);
+  }
+
+  const [todos, setTodos] = useState<Todo[]>(storedTasksArray);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +30,15 @@ const App: React.FC = () => {
       setTodo("");
     }
   };
+
+  const storeTodos = () => {
+    const storeTasks: string = JSON.stringify(todos);
+    localStorage.setItem("tasks", storeTasks);
+  };
+
+  useEffect(() => {
+    storeTodos();
+  }, [todos]);
 
   return (
     <div className=" w-screen min-h-screen flex flex-col items-center bg-gray-200 pb-8">
