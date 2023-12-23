@@ -22,7 +22,6 @@ const App: React.FC = () => {
       setTodo("");
     }
   };
-  console.log(todos);
 
   return (
     <div className=" w-screen min-h-screen flex flex-col items-center bg-gray-200 pb-8">
