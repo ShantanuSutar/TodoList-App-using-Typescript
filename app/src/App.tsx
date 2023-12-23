@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { Todo } from "./model";
 import InputField from "./components/InputField";
+import TodoList from "./components/TodoList";
 
 const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
@@ -34,6 +35,7 @@ const App: React.FC = () => {
       <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
 
       {/* Todos go here */}
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
 };
